@@ -1,14 +1,4 @@
 "use strict";
-/**
- * ### array shuffling algorithm
- * https://stackoverflow.com/a/12646864/3125961
- * answered by Laurens Holst, edited by ashleedawg
- * The algorithm has been adapted to use a custom random function.
- *
- * CC BY-SA 4.0
- * https://creativecommons.org/licenses/by-sa/4.0/
- * full license terms are available in LICENSE file.
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.lookAhead = exports.shuffle = exports.sampleWeighted = exports.sampleMultiple = exports.sampleGaussian = exports.sample = exports.booleanFnCreator = exports.boolean = void 0;
 const math_1 = require("@daeinc/math");
