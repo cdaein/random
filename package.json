@@ -1,0 +1,41 @@
+{
+  "name": "@daeinc/random",
+  "version": "0.1.0",
+  "description": "Random utilities",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "watch": "tsc --watch",
+    "test": "jest --watch",
+    "demo": "parcel ./demo/demo.html --dist-dir ./demo/build/",
+    "build": "tsc --build --clean && tsc --build"
+  },
+  "author": "Daeinc",
+  "license": "MIT",
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "canvas-sketch-util": "^1.10.0",
+    "jest": "^29.1.2",
+    "random-js": "^2.1.0",
+    "ts-jest": "^29.0.3"
+  },
+  "dependencies": {
+    "@daeinc/array": "^0.1.0",
+    "@daeinc/math": "^0.2.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdaein/random.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cdaein/random/issues"
+  },
+  "homepage": "https://github.com/cdaein/random#readme"
+}

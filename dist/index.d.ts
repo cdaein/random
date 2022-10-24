@@ -1,0 +1,73 @@
+/**
+ * ### array shuffling algorithm
+ * https://stackoverflow.com/a/12646864/3125961
+ * answered by Laurens Holst, edited by ashleedawg
+ * The algorithm has been adapted to use a custom random function.
+ *
+ * CC BY-SA 4.0
+ * https://creativecommons.org/licenses/by-sa/4.0/
+ * full license terms are available in LICENSE file.
+ */
+declare type RandFn = (n: number) => number;
+declare type ShuffleFn = <T>(arr: T[]) => T[];
+/**
+ * returns either true or false given a probability. it can also return custom value.
+ * @param prob between 0..1
+ * @param randFn seeded random function. ie. randFn(max)
+ * @param optTrue return value when true
+ * @param optFalse return value when false
+ * @returns boolean or custom value
+ */
+export declare function boolean<T>(prob: number, randFn: RandFn): boolean;
+export declare function boolean<T>(prob: number, randFn: RandFn, optTrue: NonNullable<T>, optFalse: NonNullable<T>): T;
+/**
+ * convenience function so as not to plugin seeded function all the time when using boolean(). this function returns a seeded boolean function.
+ * @param randFn seeded random function. ie. randFn(max)
+ * @param optTrue return value when true
+ * @param optFalse return value when false
+ * @returns seeded boolean function. ie. fn(prob)
+ */
+export declare function booleanFnCreator(randFn: RandFn): (prob: number) => boolean;
+export declare function booleanFnCreator<T>(randFn: RandFn, optTrue: NonNullable<T>, optFalse: NonNullable<T>): (prob: number) => T;
+/**
+ * sample a random element from array with seeded random function
+ * @param arr array to sample from
+ * @param randFn seeded random function. ie. randFn(max)
+ * @returns a sampled element from array
+ */
+export declare const sample: <T>(arr: NonNullable<T>[], randFn: RandFn) => T;
+/**
+ * REVIEW: haven't found good values to use for mean & stddev.
+ * @param arr array of values to choose from
+ * @param mean between 0..1
+ * @param stddev higher will produce more diverse values
+ * @param gaussianFn seeded random object. ie. gaussianFn(mean, stddev)
+ * @returns an element from values array
+ */
+export declare const sampleGaussian: <T>(arr: NonNullable<T>[], mean: number | undefined, stddev: number | undefined, gaussianFn: (mean: number, stddev: number) => number) => T;
+/**
+ * sampling multiple items from original array. returns a new array.
+ * @param arr array to sample from (not mutated)
+ * @param numSamples how many samples to pick
+ * @param shuffleFn seeded shuffle function. ie. shuffleFn(arr)
+ * @returns new array with numSamples length
+ */
+export declare const sampleMultiple: <T>(arr: NonNullable<T>[], numSamples: number, shuffleFn: ShuffleFn) => T[];
+/**
+ * sample a value by weights provided. the value returned can be any data, even an array.
+ * @param values array to sample from.
+ * @param weights corresponds to values array
+ * @param randFn seeded random function. ie. randFn(max)
+ * @returns a sampled value.
+ */
+export declare const sampleWeighted: <T>(values: T[], weights: number[], randFn: RandFn) => T;
+/**
+ *
+ * @param arr array to shuffle (not mutated)
+ * @param shuffleFn seeded shuffle function. ie. shuffleFn(max)
+ * @returns new shuffled array
+ */
+export declare const shuffle: <T>(arr: T[], shuffleFn: ShuffleFn) => T[];
+export declare const lookAhead: <T>(arr: T[]) => void;
+export {};
+//# sourceMappingURL=index.d.ts.map
