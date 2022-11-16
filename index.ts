@@ -121,7 +121,7 @@ export const sampleMultiple = <T>(
 };
 
 /**
- * sample a value by weights provided. the value returned can be any data, even an array.
+ * sample a value by weights provided. the value returned can be any type, even an array.
  * @param values array to sample from.
  * @param weights corresponds to values array
  * @param randFn seeded random function. ie. randFn(max)
