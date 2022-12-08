@@ -1,6 +1,6 @@
 {
   "name": "@daeinc/random",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "Random utilities",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
