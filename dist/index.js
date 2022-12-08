@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.lookAhead = exports.shuffle = exports.sampleWeighted = exports.sampleMultiple = exports.sampleGaussian = exports.sample = exports.booleanFnCreator = exports.boolean = void 0;
+exports.lookAhead = exports.shuffle = exports.sampleWeighted = exports.sampleMultiple = exports.sampleGaussian = exports.randomAround = exports.sample = exports.booleanFnCreator = exports.boolean = void 0;
 const math_1 = require("@daeinc/math");
 const array_1 = require("@daeinc/array");
 function boolean(prob, randFn, optTrue, optFalse) {
@@ -40,6 +40,21 @@ const sample = (arr, randFn) => {
 };
 exports.sample = sample;
 /**
+ * pick a random number around target value with strength (0..1)
+ * @param target must be between [min, max]
+ * @param min minimum value
+ * @param max maximum value
+ * @param strength between 0..1. 1 will always return target value
+ * @param randFn
+ */
+const randomAround = (target, min, max, strength, randFn) => {
+    if (strength < 0 || strength > 1)
+        throw new Error("randomAround(): strength must be between 0..1");
+    const r = randFn(min, max);
+    return (0, math_1.lerp)(r, target, strength);
+};
+exports.randomAround = randomAround;
+/**
  * REVIEW: haven't found good values to use for mean & stddev.
  * @param arr array of values to choose from
  * @param mean between 0..1
@@ -71,7 +86,7 @@ const sampleMultiple = (arr, numSamples, shuffleFn) => {
 };
 exports.sampleMultiple = sampleMultiple;
 /**
- * sample a value by weights provided. the value returned can be any data, even an array.
+ * sample a value by weights provided. the value returned can be any type, even an array.
  * @param values array to sample from.
  * @param weights corresponds to values array
  * @param randFn seeded random function. ie. randFn(max)

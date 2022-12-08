@@ -1,6 +1,7 @@
 import {
   boolean,
   booleanFnCreator,
+  randomAround,
   sampleMultiple,
   sampleWeighted,
 } from "../index";
@@ -16,6 +17,12 @@ const seeded = random.createRandom(seed);
 //----- booleanFnCreator()
 const bool = booleanFnCreator(seeded.range, "a", "b");
 console.log(bool(1.0));
+
+//----- randomAround()
+for (let i = 0; i < 100; i++) {
+  const r = randomAround(3, 0, 10, 0.9, seeded.range);
+  console.log(r);
+}
 
 //----- sampleMultiple()
 {

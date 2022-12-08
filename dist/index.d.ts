@@ -1,4 +1,4 @@
-declare type RandFn = (n: number) => number;
+declare type RandFn = (minOrMax: number, max?: number) => number;
 declare type ShuffleFn = <T>(arr: T[]) => T[];
 /**
  * returns either true or false given a probability. it can also return custom value.
@@ -27,6 +27,15 @@ export declare function booleanFnCreator<T>(randFn: RandFn, optTrue: NonNullable
  */
 export declare const sample: <T>(arr: NonNullable<T>[], randFn: RandFn) => T;
 /**
+ * pick a random number around target value with strength (0..1)
+ * @param target must be between [min, max]
+ * @param min minimum value
+ * @param max maximum value
+ * @param strength between 0..1. 1 will always return target value
+ * @param randFn
+ */
+export declare const randomAround: (target: number, min: number, max: number, strength: number, randFn: RandFn) => number;
+/**
  * REVIEW: haven't found good values to use for mean & stddev.
  * @param arr array of values to choose from
  * @param mean between 0..1
@@ -44,7 +53,7 @@ export declare const sampleGaussian: <T>(arr: NonNullable<T>[], mean: number | u
  */
 export declare const sampleMultiple: <T>(arr: NonNullable<T>[], numSamples: number, shuffleFn: ShuffleFn) => T[];
 /**
- * sample a value by weights provided. the value returned can be any data, even an array.
+ * sample a value by weights provided. the value returned can be any type, even an array.
  * @param values array to sample from.
  * @param weights corresponds to values array
  * @param randFn seeded random function. ie. randFn(max)

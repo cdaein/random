@@ -1,7 +1,7 @@
-import { clamp, map } from "@daeinc/math";
+import { clamp, lerp, map } from "@daeinc/math";
 import { fillAndMap } from "@daeinc/array";
 
-type RandFn = (n: number) => number;
+type RandFn = (minOrMax: number, max?: number) => number;
 type ShuffleFn = <T>(arr: T[]) => T[];
 // type NonNullable<T> = T extends null | undefined ? never : T;
 
@@ -75,6 +75,27 @@ export const sample = <T>(arr: NonNullable<T>[], randFn: RandFn): T => {
   if (randFn === undefined)
     throw new Error("sample(): needs a random function argument");
   return arr[Math.floor(randFn(arr.length))];
+};
+
+/**
+ * pick a random number around target value with strength (0..1)
+ * @param target must be between [min, max]
+ * @param min minimum value
+ * @param max maximum value
+ * @param strength between 0..1. 1 will always return target value
+ * @param randFn
+ */
+export const randomAround = (
+  target: number,
+  min: number,
+  max: number,
+  strength: number,
+  randFn: RandFn
+) => {
+  if (strength < 0 || strength > 1)
+    throw new Error("randomAround(): strength must be between 0..1");
+  const r = randFn(min, max);
+  return lerp(r, target, strength);
 };
 
 /**
