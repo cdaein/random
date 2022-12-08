@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.lookAhead = exports.shuffle = exports.sampleWeighted = exports.sampleMultiple = exports.sampleGaussian = exports.randomAround = exports.sample = exports.booleanFnCreator = exports.boolean = void 0;
+exports.lookAhead = exports.shuffle = exports.sampleWeighted = exports.sampleMultiple = exports.sampleGaussian = exports.randomTowards = exports.sample = exports.booleanFnCreator = exports.boolean = void 0;
 const math_1 = require("@daeinc/math");
 const array_1 = require("@daeinc/array");
 function boolean(prob, randFn, optTrue, optFalse) {
@@ -44,16 +44,17 @@ exports.sample = sample;
  * @param target must be between [min, max]
  * @param min minimum value
  * @param max maximum value
- * @param strength between 0..1. 1 will always return target value
+ * @param strength between 0..1. 0.75~1 seems to be good.
  * @param randFn
  */
-const randomAround = (target, min, max, strength, randFn) => {
+const randomTowards = (target, min, max, strength, randFn) => {
     if (strength < 0 || strength > 1)
-        throw new Error("randomAround(): strength must be between 0..1");
+        throw new Error("randomTowards(): strength must be between 0..1");
     const r = randFn(min, max);
-    return (0, math_1.lerp)(r, target, strength);
+    const st = randFn(strength);
+    return (0, math_1.lerp)(r, target, st);
 };
-exports.randomAround = randomAround;
+exports.randomTowards = randomTowards;
 /**
  * REVIEW: haven't found good values to use for mean & stddev.
  * @param arr array of values to choose from

@@ -31,10 +31,10 @@ export declare const sample: <T>(arr: NonNullable<T>[], randFn: RandFn) => T;
  * @param target must be between [min, max]
  * @param min minimum value
  * @param max maximum value
- * @param strength between 0..1. 1 will always return target value
+ * @param strength between 0..1. 0.75~1 seems to be good.
  * @param randFn
  */
-export declare const randomAround: (target: number, min: number, max: number, strength: number, randFn: RandFn) => number;
+export declare const randomTowards: (target: number, min: number, max: number, strength: number, randFn: RandFn) => number;
 /**
  * REVIEW: haven't found good values to use for mean & stddev.
  * @param arr array of values to choose from

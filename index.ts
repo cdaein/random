@@ -82,10 +82,10 @@ export const sample = <T>(arr: NonNullable<T>[], randFn: RandFn): T => {
  * @param target must be between [min, max]
  * @param min minimum value
  * @param max maximum value
- * @param strength between 0..1. 1 will always return target value
+ * @param strength between 0..1. 0.75~1 seems to be good.
  * @param randFn
  */
-export const randomAround = (
+export const randomTowards = (
   target: number,
   min: number,
   max: number,
@@ -93,9 +93,10 @@ export const randomAround = (
   randFn: RandFn
 ) => {
   if (strength < 0 || strength > 1)
-    throw new Error("randomAround(): strength must be between 0..1");
+    throw new Error("randomTowards(): strength must be between 0..1");
   const r = randFn(min, max);
-  return lerp(r, target, strength);
+  const st = randFn(strength);
+  return lerp(r, target, st);
 };
 
 /**

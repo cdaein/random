@@ -1,7 +1,7 @@
 import {
   boolean,
   booleanFnCreator,
-  randomAround,
+  randomTowards,
   sampleMultiple,
   sampleWeighted,
 } from "../index";
@@ -20,7 +20,7 @@ console.log(bool(1.0));
 
 //----- randomAround()
 for (let i = 0; i < 100; i++) {
-  const r = randomAround(3, 0, 10, 0.9, seeded.range);
+  const r = randomTowards(3, 0, 10, 0.9, seeded.range);
   console.log(r);
 }
 
