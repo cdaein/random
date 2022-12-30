@@ -1,5 +1,5 @@
-declare type RandFn = (minOrMax: number, max?: number) => number;
-declare type ShuffleFn = <T>(arr: T[]) => T[];
+type RandFn = (minOrMax: number, max?: number) => number;
+type ShuffleFn = <T>(arr: T[]) => T[];
 /**
  * returns either true or false given a probability. it can also return custom value.
  * @param prob between 0..1
