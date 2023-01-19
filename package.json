@@ -19,11 +19,11 @@
     "canvas-sketch-util": "^1.10.0",
     "jest": "^29.3.1",
     "random-js": "^2.1.0",
-    "ts-jest": "^29.0.3"
+    "ts-jest": "^29.0.5"
   },
   "dependencies": {
-    "@daeinc/array": "^0.4.2",
-    "@daeinc/math": "^0.4.0"
+    "@daeinc/array": "^0.5.0",
+    "@daeinc/math": "^0.5.0"
   },
   "publishConfig": {
     "access": "public",
