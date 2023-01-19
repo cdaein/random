@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.lookAhead = exports.shuffle = exports.sampleWeighted = exports.sampleMultiple = exports.sampleGaussian = exports.randomTowards = exports.sample = exports.booleanFnCreator = exports.boolean = void 0;
-const math_1 = require("@daeinc/math");
-const array_1 = require("@daeinc/array");
-function boolean(prob, randFn, optTrue, optFalse) {
+import { clamp, lerp, map } from "@daeinc/math";
+import { fillAndMap } from "@daeinc/array";
+export function boolean(prob, randFn, optTrue, optFalse) {
     if (optTrue !== undefined && optFalse !== undefined) {
         if (typeof optTrue === typeof optFalse) {
             return randFn(1) < prob ? optTrue : optFalse; // if options are present
@@ -14,8 +11,7 @@ function boolean(prob, randFn, optTrue, optFalse) {
     }
     throw new Error("boolean(): check the number or type of arguments");
 }
-exports.boolean = boolean;
-function booleanFnCreator(randFn, optTrue, optFalse) {
+export function booleanFnCreator(randFn, optTrue, optFalse) {
     if (optTrue !== undefined && optFalse !== undefined) {
         if (typeof optTrue === typeof optFalse) {
             return (prob) => boolean(prob, randFn, optTrue, optFalse);
@@ -26,19 +22,17 @@ function booleanFnCreator(randFn, optTrue, optFalse) {
     }
     throw new Error("booleanFnCreator(): check the number or type of arguments");
 }
-exports.booleanFnCreator = booleanFnCreator;
 /**
  * sample a random element from array with seeded random function
  * @param arr array to sample from
  * @param randFn seeded random function. ie. randFn(max)
  * @returns a sampled element from array
  */
-const sample = (arr, randFn) => {
+export const sample = (arr, randFn) => {
     if (randFn === undefined)
         throw new Error("sample(): needs a random function argument");
     return arr[Math.floor(randFn(arr.length))];
 };
-exports.sample = sample;
 /**
  * pick a random number around target value with strength (0..1)
  * @param target must be between [min, max]
@@ -47,14 +41,13 @@ exports.sample = sample;
  * @param strength between 0..1. 0.75~1 seems to be good.
  * @param randFn
  */
-const randomTowards = (target, min, max, strength, randFn) => {
+export const randomTowards = (target, min, max, strength, randFn) => {
     if (strength < 0 || strength > 1)
         throw new Error("randomTowards(): strength must be between 0..1");
     const r = randFn(min, max);
     const st = randFn(strength);
-    return (0, math_1.lerp)(r, target, st);
+    return lerp(r, target, st);
 };
-exports.randomTowards = randomTowards;
 /**
  * REVIEW: haven't found good values to use for mean & stddev.
  * @param arr array of values to choose from
@@ -63,12 +56,11 @@ exports.randomTowards = randomTowards;
  * @param gaussianFn seeded random object. ie. gaussianFn(mean, stddev)
  * @returns an element from values array
  */
-const sampleGaussian = (arr, mean = 0.5, stddev = 0.1, gaussianFn) => {
+export const sampleGaussian = (arr, mean = 0.5, stddev = 0.1, gaussianFn) => {
     const val = gaussianFn(mean, stddev);
-    const idx = (0, math_1.clamp)(Math.floor((0, math_1.map)(val, 0, 1, 0, arr.length)), 0, arr.length - 1);
+    const idx = clamp(Math.floor(map(val, 0, 1, 0, arr.length)), 0, arr.length - 1);
     return arr[idx];
 };
-exports.sampleGaussian = sampleGaussian;
 /**
  * sampling multiple items from original array. returns a new array.
  * @param arr array to sample from (not mutated)
@@ -76,16 +68,15 @@ exports.sampleGaussian = sampleGaussian;
  * @param shuffleFn seeded shuffle function. ie. shuffleFn(arr)
  * @returns new array with numSamples length
  */
-const sampleMultiple = (arr, numSamples, shuffleFn) => {
+export const sampleMultiple = (arr, numSamples, shuffleFn) => {
     if (arr.length >= numSamples) {
-        const copy = (0, exports.shuffle)(arr, shuffleFn);
-        return (0, array_1.fillAndMap)(numSamples, (_, i) => copy[i]);
+        const copy = shuffle(arr, shuffleFn);
+        return fillAndMap(numSamples, (_, i) => copy[i]);
     }
     else {
         throw new Error("sampleMultiple(): arr.length must be >= numSamples");
     }
 };
-exports.sampleMultiple = sampleMultiple;
 /**
  * sample a value by weights provided. the value returned can be any type, even an array.
  * @param values array to sample from.
@@ -93,7 +84,7 @@ exports.sampleMultiple = sampleMultiple;
  * @param randFn seeded random function. ie. randFn(max)
  * @returns a sampled value.
  */
-const sampleWeighted = (values, weights, randFn) => {
+export const sampleWeighted = (values, weights, randFn) => {
     if (values.length !== weights.length)
         throw new Error("sampleWeighted(): values and weights must have same length");
     // progressive sum of weights
@@ -113,20 +104,17 @@ const sampleWeighted = (values, weights, randFn) => {
     // fallback. random pick. ex. when all weights are zero.
     return values[Math.floor(randFn(values.length))];
 };
-exports.sampleWeighted = sampleWeighted;
 /**
  *
  * @param arr array to shuffle (not mutated)
  * @param shuffleFn seeded shuffle function. ie. shuffleFn(max)
  * @returns new shuffled array
  */
-const shuffle = (arr, shuffleFn) => shuffleFn(arr);
-exports.shuffle = shuffle;
+export const shuffle = (arr, shuffleFn) => shuffleFn(arr);
 // forgot what i was trying to do with this...
-const lookAhead = (arr) => {
+export const lookAhead = (arr) => {
     //
 };
-exports.lookAhead = lookAhead;
 const sampleCurve = (values, curveFn, randFn) => {
     return;
 };
